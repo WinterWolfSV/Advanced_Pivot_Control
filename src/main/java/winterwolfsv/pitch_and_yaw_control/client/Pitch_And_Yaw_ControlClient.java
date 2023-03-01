@@ -19,17 +19,21 @@ public class Pitch_And_Yaw_ControlClient implements ClientModInitializer {
     private static KeyBinding pitchUp = KeyBindingHelper.registerKeyBinding(new KeyBinding("Look up", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UP, "Pitch and Yaw Control"));
     private static KeyBinding pitchDown = KeyBindingHelper.registerKeyBinding(new KeyBinding("Look down", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_DOWN, "Pitch and Yaw Control"));
 
+    // Idk why, but it works. Do not touch.
     private static void turnYaw(int direction, int degrees) {
         PlayerEntity player = MinecraftClient.getInstance().player;
         assert player != null;
         if (player.getYaw() % degrees != 0) {
             if (direction < 0) {
-                player.setYaw(player.getYaw() - player.getYaw() % degrees);
+                player.setYaw(player.getYaw() - degrees - player.getYaw() % degrees);
+                System.out.println("-1");
             } else {
-                player.setYaw(player.getYaw() + degrees - player.getYaw() % degrees);
+                player.setYaw(player.getYaw() - player.getYaw() % degrees);
+                System.out.println("1");
             }
         } else {
             player.setYaw(player.getYaw() + direction * degrees);
+            System.out.println("0");
         }
     }
 
