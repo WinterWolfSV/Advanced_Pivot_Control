@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "pitch_and_yaw_control",
+  "version": "${version}",
+  "name": "Pitch_And_Yaw_Control",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/Pitch_And_Yaw_Control/icon.png",
+  "environment": "client",
+  "entrypoints": {
+	"client": ["winterwolfsv.pitch_and_yaw_control.client.Pitch_And_Yaw_ControlClient"],
+	"main": ["winterwolfsv.pitch_and_yaw_control.Pitch_And_Yaw_Control"]
+  },
+  "mixins": [
+	"Pitch_And_Yaw_Control.mixins.json"
+  ],
+  "depends": {
+	"fabricloader": ">=0.14.17",
+	"fabric": "*",
+	"minecraft": "1.19.3"
+  }
+}
