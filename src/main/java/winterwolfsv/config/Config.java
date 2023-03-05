@@ -1,13 +1,21 @@
-//package winterwolfsv.config;
-//
-//import me.shedaniel.clothconfig2.api.ConfigBuilder;
-//import net.minecraft.client.gui.screen.Screen;
-//import net.minecraft.text.Text;
-//import net.minecraft.text.TranslatableTextContent;
-//
-//public class Config {
-//    private Screen parent;
-//    ConfigBuilder builder = ConfigBuilder.create()
-//            .setParentScreen(parent)
-//            .setTitle(new Text("config.winterwolfsv.title"));
-//}
+package winterwolfsv.config;
+
+import me.shedaniel.autoconfig.ConfigData;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import winterwolfsv.advancedangleassist.client.AdvancedAngleAssistClient;
+
+@me.shedaniel.autoconfig.annotation.Config(name = AdvancedAngleAssistClient.MOD_ID)
+public
+class Config implements ConfigData {
+    @ConfigEntry.Gui.Tooltip()
+    @ConfigEntry.Gui.PrefixText
+    @ConfigEntry.BoundedDiscrete(max = 180, min = 1)
+    public int yawSteps = 45;
+    @ConfigEntry.Gui.Tooltip()
+    @ConfigEntry.BoundedDiscrete(max = 90, min = 1)
+    public int pitchSteps = 30;
+
+    @ConfigEntry.Gui.Tooltip()
+    public boolean messageFeedback = true;
+
+}

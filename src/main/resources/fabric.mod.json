@@ -1,23 +1,21 @@
 {
   "schemaVersion": 1,
-  "id": "pitch_and_yaw_control",
+  "id": "advanced_angle_assist",
   "version": "${version}",
-  "name": "Pitch_And_Yaw_Control",
-  "description": "",
-  "authors": [],
+  "name": "AdvancedAngleAssist",
+  "description": "A client side mod that allows you to adjust your pitch and yaw with greater precision than the default game settings allow for.",
+  "authors": ["WinterWolfSV"],
   "contact": {},
-  "license": "MIT",
+  "license": "CC-BY-NC-4.0",
   "icon": "assets/Pitch_And_Yaw_Control/icon.png",
   "environment": "client",
   "entrypoints": {
-	"client": ["winterwolfsv.pitch_and_yaw_control.client.Pitch_And_Yaw_ControlClient"],
-	"main": ["winterwolfsv.pitch_and_yaw_control.Pitch_And_Yaw_Control"]
+	"client": ["winterwolfsv.advancedangleassist.client.AdvancedAngleAssistClient"],
+	"main": ["winterwolfsv.advancedangleassist.AdvancedAngleAssist"],
+	"modmenu": ["winterwolfsv.config.ModMenu"]
   },
-  "mixins": [
-	"Pitch_And_Yaw_Control.mixins.json"
-  ],
   "depends": {
-	"fabricloader": ">=0.14.17",
+	"fabricloader": ">=0.14.14",
 	"fabric": "*",
 	"minecraft": "1.19.3"
   }
