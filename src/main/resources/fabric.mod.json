@@ -7,7 +7,7 @@
   "authors": ["WinterWolfSV"],
   "contact": {},
   "license": "CC-BY-NC-4.0",
-  "icon": "assets/Pitch_And_Yaw_Control/icon.png",
+  "icon": "assets/advancedangleassist/icon.png",
   "environment": "client",
   "entrypoints": {
 	"client": ["winterwolfsv.advancedangleassist.client.AdvancedAngleAssistClient"],
@@ -15,8 +15,9 @@
 	"modmenu": ["winterwolfsv.config.ModMenu"]
   },
   "depends": {
-	"fabricloader": ">=0.14.14",
+	"fabricloader": "*",
 	"fabric": "*",
-	"minecraft": "1.19.3"
+	"minecraft": "1.19.3",
+	"cloth-config": "9.0.94"
   }
 }
