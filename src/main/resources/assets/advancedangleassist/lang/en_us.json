@@ -1,0 +1,10 @@
+{
+  "text.autoconfig.advanced_angle_assist.title": "Advanced Angle Assist",
+  "text.autoconfig.advanced_angle_assist.option.yawSteps.@PrefixText": "Keybindings can be found in the Controls menu",
+  "text.autoconfig.advanced_angle_assist.option.yawSteps.@Tooltip": "Adjust the amount of degrees to change yaw by when using the keybinds",
+  "text.autoconfig.advanced_angle_assist.option.yawSteps": "Yaw steps ",
+  "text.autoconfig.advanced_angle_assist.option.pitchSteps.@Tooltip": "Adjust the amount of degrees to change pitch by when using the keybinds",
+  "text.autoconfig.advanced_angle_assist.option.pitchSteps": "Pitch steps ",
+  "text.autoconfig.advanced_angle_assist.option.messageFeedback.@Tooltip": "Change whether a message is displayed when using keybindings or commands",
+  "text.autoconfig.advanced_angle_assist.option.messageFeedback": "Command feedback "
+}
