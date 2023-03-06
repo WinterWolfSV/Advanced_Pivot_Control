@@ -1,4 +1,4 @@
-package winterwolfsv.advancedangleassist.client;
+package winterwolfsv.advancedpivotcontrol.client;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigManager;
@@ -15,13 +15,13 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import org.lwjgl.glfw.GLFW;
 
-import static winterwolfsv.advancedangleassist.client.Commands.sendCommandFeedback;
+import static winterwolfsv.advancedpivotcontrol.client.Commands.sendCommandFeedback;
 
 
 @Environment(EnvType.CLIENT)
-public class AdvancedAngleAssistClient implements ClientModInitializer {
+public class AdvancedPivotControlClient implements ClientModInitializer {
     public static ConfigManager configManager;
-    public static final String MOD_ID = "advanced_angle_assist";
+    public static final String MOD_ID = "advanced_pivot_control";
 
 
     private static final KeyBinding yawRight = KeyBindingHelper.registerKeyBinding(new KeyBinding("Turn right", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT, "Pitch and Yaw Control"));
