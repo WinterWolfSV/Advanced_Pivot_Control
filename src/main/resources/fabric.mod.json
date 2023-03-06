@@ -1,23 +1,23 @@
 {
   "schemaVersion": 1,
-  "id": "advanced_angle_assist",
+  "id": "advanced_pivot_control",
   "version": "${version}",
-  "name": "AdvancedAngleAssist",
+  "name": "Advanced Pivot Control",
   "description": "A client side mod that allows you to adjust your pitch and yaw with greater precision than the default game settings allow for.",
   "authors": ["WinterWolfSV"],
   "contact": {},
   "license": "CC-BY-NC-4.0",
-  "icon": "assets/advancedangleassist/icon.png",
+  "icon": "assets/advancedpivotcontrol/icon.png",
   "environment": "client",
   "entrypoints": {
-	"client": ["winterwolfsv.advancedangleassist.client.AdvancedAngleAssistClient"],
-	"main": ["winterwolfsv.advancedangleassist.AdvancedAngleAssist"],
+	"client": ["winterwolfsv.advancedpivotcontrol.client.AdvancedPivotControlClient"],
+	"main": ["winterwolfsv.advancedpivotcontrol.AdvancedPivotControl"],
 	"modmenu": ["winterwolfsv.config.ModMenu"]
   },
   "depends": {
 	"fabricloader": "*",
 	"fabric": "*",
-	"minecraft": ">=1.19.0 <=1.19.3",
+	"minecraft": "*",
 	"cloth-config": "*"
   }
 }

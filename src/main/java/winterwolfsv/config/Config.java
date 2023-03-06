@@ -2,9 +2,9 @@ package winterwolfsv.config;
 
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
-import winterwolfsv.advancedangleassist.client.AdvancedAngleAssistClient;
+import winterwolfsv.advancedpivotcontrol.client.AdvancedPivotControlClient;
 
-@me.shedaniel.autoconfig.annotation.Config(name = AdvancedAngleAssistClient.MOD_ID)
+@me.shedaniel.autoconfig.annotation.Config(name = AdvancedPivotControlClient.MOD_ID)
 public
 class Config implements ConfigData {
     @ConfigEntry.Gui.Tooltip()
