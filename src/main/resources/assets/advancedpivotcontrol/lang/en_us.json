@@ -6,5 +6,7 @@
   "text.autoconfig.advanced_pivot_control.option.pitchSteps.@Tooltip": "Adjust the amount of degrees to change pitch by when using the keybinds",
   "text.autoconfig.advanced_pivot_control.option.pitchSteps": "Pitch steps ",
   "text.autoconfig.advanced_pivot_control.option.messageFeedback.@Tooltip": "Change whether a message is displayed when using keybindings or commands",
-  "text.autoconfig.advanced_pivot_control.option.messageFeedback": "Command feedback "
+  "text.autoconfig.advanced_pivot_control.option.messageFeedback": "Command feedback ",
+  "text.autoconfig.advanced_pivot_control.option.lockYaw": "Lock yaw ",
+  "text.autoconfig.advanced_pivot_control.option.lockPitch": "Lock pitch "
 }

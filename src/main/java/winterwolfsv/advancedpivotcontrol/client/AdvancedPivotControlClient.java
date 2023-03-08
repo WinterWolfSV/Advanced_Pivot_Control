@@ -15,6 +15,8 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import static winterwolfsv.advancedpivotcontrol.client.Commands.sendCommandFeedback;
 
 
@@ -22,12 +24,16 @@ import static winterwolfsv.advancedpivotcontrol.client.Commands.sendCommandFeedb
 public class AdvancedPivotControlClient implements ClientModInitializer {
     public static ConfigManager configManager;
     public static final String MOD_ID = "advanced_pivot_control";
+    public static float currentYaw;
+    public static float currentPitch;
 
 
     private static final KeyBinding yawRight = KeyBindingHelper.registerKeyBinding(new KeyBinding("Turn right", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_RIGHT, "Pitch and Yaw Control"));
     private static final KeyBinding yawLeft = KeyBindingHelper.registerKeyBinding(new KeyBinding("Turn left", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_LEFT, "Pitch and Yaw Control"));
     private static final KeyBinding pitchUp = KeyBindingHelper.registerKeyBinding(new KeyBinding("Look up", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_UP, "Pitch and Yaw Control"));
     private static final KeyBinding pitchDown = KeyBindingHelper.registerKeyBinding(new KeyBinding("Look down", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_DOWN, "Pitch and Yaw Control"));
+    private static final KeyBinding lockYaw = KeyBindingHelper.registerKeyBinding(new KeyBinding("Lock yaw", InputUtil.Type.KEYSYM, -1, "Pitch and Yaw Control"));
+    private static final KeyBinding lockPitch = KeyBindingHelper.registerKeyBinding(new KeyBinding("Lock pitch", InputUtil.Type.KEYSYM, -1, "Pitch and Yaw Control"));
 
     private static int turnYaw(int direction, int degrees) {
         PlayerEntity player = MinecraftClient.getInstance().player;
@@ -50,6 +56,7 @@ public class AdvancedPivotControlClient implements ClientModInitializer {
         } else if (yaw < -180) {
             yaw += 360;
         }
+        currentYaw = yaw;
         return (int) yaw;
 
     }
@@ -66,6 +73,7 @@ public class AdvancedPivotControlClient implements ClientModInitializer {
         } else {
             player.setPitch(player.getPitch() + direction * degrees);
         }
+        currentPitch = player.getPitch();
         return (int) Math.min(90, Math.max(-90, player.getPitch()));
     }
 
@@ -73,6 +81,7 @@ public class AdvancedPivotControlClient implements ClientModInitializer {
     public void onInitializeClient() {
         configManager = (ConfigManager) AutoConfig.register(Config.class, GsonConfigSerializer::new);
         Config config = AutoConfig.getConfigHolder(Config.class).getConfig();
+        lockView();
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (yawRight.wasPressed()) {
@@ -86,6 +95,41 @@ public class AdvancedPivotControlClient implements ClientModInitializer {
             }
             while (pitchDown.wasPressed()) {
                 sendCommandFeedback("Rotating pitch " + config.pitchSteps + "° downwards. New pitch: " + turnPitch(1, config.pitchSteps));
+            }
+            while (lockYaw.wasPressed()) {
+                config.lockYaw = !config.lockYaw;
+                configManager.save();
+                sendCommandFeedback("Yaw lock " + (config.lockYaw ? "enabled" : "disabled"));
+
+            }
+            while (lockPitch.wasPressed()) {
+                config.lockPitch = !config.lockPitch;
+                configManager.save();
+                sendCommandFeedback("Pitch lock " + (config.lockPitch ? "enabled" : "disabled"));
+
+            }
+        });
+    }
+
+    private void lockView() {
+        AtomicBoolean oldLockYaw = new AtomicBoolean(false);
+        AtomicBoolean oldLockPitch = new AtomicBoolean(false);
+        Config config = AutoConfig.getConfigHolder(Config.class).getConfig();
+        ClientTickEvents.END_WORLD_TICK.register(client -> {
+            PlayerEntity player = MinecraftClient.getInstance().player;
+            if (oldLockYaw.get() != config.lockYaw || oldLockPitch.get() != config.lockPitch) {
+                if (player != null) {
+                    currentYaw = player.getYaw();
+                    currentPitch = player.getPitch();
+                }
+            }
+            oldLockYaw.set(config.lockYaw);
+            oldLockPitch.set(config.lockPitch);
+            if (config.lockYaw && player != null && player.getYaw() != currentYaw) {
+                player.setYaw(currentYaw);
+            }
+            if (config.lockPitch && player != null && player.getPitch() != currentPitch) {
+                player.setPitch(currentPitch);
             }
         });
     }

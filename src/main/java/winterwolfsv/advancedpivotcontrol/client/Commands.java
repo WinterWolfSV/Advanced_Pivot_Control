@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.text.Text;
 import winterwolfsv.config.Config;
+import winterwolfsv.advancedpivotcontrol.client.AdvancedPivotControlClient;
 
 public class Commands {
 
@@ -37,7 +38,14 @@ public class Commands {
                                             .executes(context -> commandSetYawSteps(IntegerArgumentType.getInteger(context, "yaw")))))
                             .then(CommandManager.literal("doCommandFeedback")
                                     .then(CommandManager.argument("doCommandFeedback", BoolArgumentType.bool())
-                                            .executes(context -> commandDoCommandFeedback(BoolArgumentType.getBool(context, "doCommandFeedback"))))))));
+                                            .executes(context -> commandDoCommandFeedback(BoolArgumentType.getBool(context, "doCommandFeedback")))))
+                            .then(CommandManager.literal("lockYaw")
+                                    .then(CommandManager.argument("lockYaw", BoolArgumentType.bool())
+                                            .executes(context -> commandLockYaw(BoolArgumentType.getBool(context, "lockYaw")))))
+                            .then(CommandManager.literal("lockPitch")
+                                    .then(CommandManager.argument("lockPitch", BoolArgumentType.bool())
+                                            .executes(context -> commandLockPitch(BoolArgumentType.getBool(context, "lockPitch"))))))));
+
 
             CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(CommandManager.literal("pitch")
                     .then(CommandManager.argument("pitch", IntegerArgumentType.integer(-90, 90))
@@ -46,6 +54,14 @@ public class Commands {
             CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> dispatcher.register(CommandManager.literal("yaw")
                     .then(CommandManager.argument("yaw", IntegerArgumentType.integer(-180, 180))
                             .executes(context -> commandSetYaw(IntegerArgumentType.getInteger(context, "yaw")))))));
+
+            CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> dispatcher.register(CommandManager.literal("lockyaw")
+                    .then(CommandManager.argument("lockYaw", BoolArgumentType.bool())
+                            .executes(context -> commandLockYaw(BoolArgumentType.getBool(context, "lockYaw")))))));
+
+            CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> dispatcher.register(CommandManager.literal("lockpitch")
+                    .then(CommandManager.argument("lockPitch", BoolArgumentType.bool())
+                            .executes(context -> commandLockPitch(BoolArgumentType.getBool(context, "lockPitch")))))));
 
             CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> dispatcher.register(CommandManager.literal("setangle")
                     .then(CommandManager.argument("yaw", IntegerArgumentType.integer(-180, 180))
@@ -129,5 +145,18 @@ public class Commands {
         }
     }
 
+    private static int commandLockYaw(boolean lockYaw) {
+        AutoConfig.getConfigHolder(Config.class).getConfig().lockYaw = lockYaw;
+        AutoConfig.getConfigHolder(Config.class).save();
+        sendCommandFeedback("Yaw lock set to " + AutoConfig.getConfigHolder(Config.class).getConfig().lockYaw);
+        return 1;
+    }
+
+    private static int commandLockPitch(boolean lockPitch) {
+        AutoConfig.getConfigHolder(Config.class).getConfig().lockPitch = lockPitch;
+        AutoConfig.getConfigHolder(Config.class).save();
+        sendCommandFeedback("Pitch lock set to " + AutoConfig.getConfigHolder(Config.class).getConfig().lockPitch);
+        return 1;
+    }
 
 }
