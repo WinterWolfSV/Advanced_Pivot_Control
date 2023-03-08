@@ -18,4 +18,7 @@ class Config implements ConfigData {
     @ConfigEntry.Gui.Tooltip()
     public boolean messageFeedback = true;
 
+    public boolean lockYaw = false;
+    public boolean lockPitch = false;
+
 }
