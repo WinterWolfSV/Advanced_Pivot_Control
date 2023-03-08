@@ -1,15 +1,14 @@
 package winterwolfsv.advancedpivotcontrol.client;
 
 import com.mojang.brigadier.arguments.BoolArgumentType;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.DoubleArgumentType;
 import me.shedaniel.autoconfig.AutoConfig;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.command.CommandManager;
 import net.minecraft.text.Text;
 import winterwolfsv.config.Config;
-import winterwolfsv.advancedpivotcontrol.client.AdvancedPivotControlClient;
 
 public class Commands {
 
@@ -18,55 +17,56 @@ public class Commands {
 
         for (int i = 0; i < nameList.length; i++) {
             int finalI = i;
-            CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(CommandManager.literal(nameList[finalI])
-                    .then(CommandManager.literal("pitch")
-                            .then(CommandManager.argument("pitch", IntegerArgumentType.integer(-90, 90))
-                                    .executes(context -> commandSetPitch(IntegerArgumentType.getInteger(context, "pitch")))))
-                    .then(CommandManager.literal("yaw")
-                            .then(CommandManager.argument("yaw", IntegerArgumentType.integer(-180, 180))
-                                    .executes(context -> commandSetYaw(IntegerArgumentType.getInteger(context, "yaw")))))
-                    .then(CommandManager.literal("angle")
-                            .then(CommandManager.argument("pitch", IntegerArgumentType.integer(-90, 90))
-                                    .then(CommandManager.argument("yaw", IntegerArgumentType.integer(-180, 180))
-                                            .executes(context -> commandSetAngle(IntegerArgumentType.getInteger(context, "pitch"), IntegerArgumentType.getInteger(context, "yaw"))))))
-                    .then(CommandManager.literal("config")
-                            .then(CommandManager.literal("setPitchSteps")
-                                    .then(CommandManager.argument("pitch", IntegerArgumentType.integer(1, 90))
-                                            .executes(context -> commandSetPitchSteps(IntegerArgumentType.getInteger(context, "pitch")))))
-                            .then(CommandManager.literal("setYawSteps")
-                                    .then(CommandManager.argument("yaw", IntegerArgumentType.integer(1, 180))
-                                            .executes(context -> commandSetYawSteps(IntegerArgumentType.getInteger(context, "yaw")))))
-                            .then(CommandManager.literal("doCommandFeedback")
-                                    .then(CommandManager.argument("doCommandFeedback", BoolArgumentType.bool())
+
+            ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal(nameList[finalI])
+                    .then(ClientCommandManager.literal("pitch")
+                            .then(ClientCommandManager.argument("pitch", DoubleArgumentType.doubleArg(-90, 90))
+                                    .executes(context -> commandSetPitch((float) DoubleArgumentType.getDouble(context, "pitch")))))
+                    .then(ClientCommandManager.literal("yaw")
+                            .then(ClientCommandManager.argument("yaw", DoubleArgumentType.doubleArg(-180, 180))
+                                    .executes(context -> commandSetYaw((float) DoubleArgumentType.getDouble(context, "yaw")))))
+                    .then(ClientCommandManager.literal("angle")
+                            .then(ClientCommandManager.argument("pitch", DoubleArgumentType.doubleArg(-90, 90))
+                                    .then(ClientCommandManager.argument("yaw", DoubleArgumentType.doubleArg(-180, 180))
+                                            .executes(context -> commandSetAngle((float) DoubleArgumentType.getDouble(context, "pitch"), (float) DoubleArgumentType.getDouble(context, "yaw"))))))
+                    .then(ClientCommandManager.literal("config")
+                            .then(ClientCommandManager.literal("setPitchSteps")
+                                    .then(ClientCommandManager.argument("pitch", DoubleArgumentType.doubleArg(1, 90))
+                                            .executes(context -> commandSetPitchSteps((int) DoubleArgumentType.getDouble(context, "pitch")))))
+                            .then(ClientCommandManager.literal("setYawSteps")
+                                    .then(ClientCommandManager.argument("yaw", DoubleArgumentType.doubleArg(1, 180))
+                                            .executes(context -> commandSetYawSteps((int) DoubleArgumentType.getDouble(context, "yaw")))))
+                            .then(ClientCommandManager.literal("doCommandFeedback")
+                                    .then(ClientCommandManager.argument("doCommandFeedback", BoolArgumentType.bool())
                                             .executes(context -> commandDoCommandFeedback(BoolArgumentType.getBool(context, "doCommandFeedback")))))
-                            .then(CommandManager.literal("lockYaw")
-                                    .then(CommandManager.argument("lockYaw", BoolArgumentType.bool())
+                            .then(ClientCommandManager.literal("lockYaw")
+                                    .then(ClientCommandManager.argument("lockYaw", BoolArgumentType.bool())
                                             .executes(context -> commandLockYaw(BoolArgumentType.getBool(context, "lockYaw")))))
-                            .then(CommandManager.literal("lockPitch")
-                                    .then(CommandManager.argument("lockPitch", BoolArgumentType.bool())
+                            .then(ClientCommandManager.literal("lockPitch")
+                                    .then(ClientCommandManager.argument("lockPitch", BoolArgumentType.bool())
                                             .executes(context -> commandLockPitch(BoolArgumentType.getBool(context, "lockPitch"))))))));
 
 
-            CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(CommandManager.literal("pitch")
-                    .then(CommandManager.argument("pitch", IntegerArgumentType.integer(-90, 90))
-                            .executes(context -> commandSetPitch(IntegerArgumentType.getInteger(context, "pitch"))))));
+            ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("pitch")
+                    .then(ClientCommandManager.argument("pitch", DoubleArgumentType.doubleArg(-90, 90))
+                            .executes(context -> commandSetPitch((float) DoubleArgumentType.getDouble(context, "pitch"))))));
 
-            CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> dispatcher.register(CommandManager.literal("yaw")
-                    .then(CommandManager.argument("yaw", IntegerArgumentType.integer(-180, 180))
-                            .executes(context -> commandSetYaw(IntegerArgumentType.getInteger(context, "yaw")))))));
+            ClientCommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("yaw")
+                    .then(ClientCommandManager.argument("yaw", DoubleArgumentType.doubleArg(-180, 180))
+                            .executes(context -> commandSetYaw((float) DoubleArgumentType.getDouble(context, "yaw")))))));
 
-            CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> dispatcher.register(CommandManager.literal("lockyaw")
-                    .then(CommandManager.argument("lockYaw", BoolArgumentType.bool())
+            ClientCommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("lockyaw")
+                    .then(ClientCommandManager.argument("lockYaw", BoolArgumentType.bool())
                             .executes(context -> commandLockYaw(BoolArgumentType.getBool(context, "lockYaw")))))));
 
-            CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> dispatcher.register(CommandManager.literal("lockpitch")
-                    .then(CommandManager.argument("lockPitch", BoolArgumentType.bool())
+            ClientCommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("lockpitch")
+                    .then(ClientCommandManager.argument("lockPitch", BoolArgumentType.bool())
                             .executes(context -> commandLockPitch(BoolArgumentType.getBool(context, "lockPitch")))))));
 
-            CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> dispatcher.register(CommandManager.literal("setangle")
-                    .then(CommandManager.argument("yaw", IntegerArgumentType.integer(-180, 180))
-                            .then(CommandManager.argument("pitch", IntegerArgumentType.integer(-90, 90))
-                                    .executes(context -> commandSetAngle(IntegerArgumentType.getInteger(context, "pitch"), IntegerArgumentType.getInteger(context, "yaw"))))))));
+            ClientCommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("angle")
+                    .then(ClientCommandManager.argument("yaw", DoubleArgumentType.doubleArg(-180, 180))
+                            .then(ClientCommandManager.argument("pitch", DoubleArgumentType.doubleArg(-90, 90))
+                                    .executes(context -> commandSetAngle((float) DoubleArgumentType.getDouble(context, "pitch"), (float) DoubleArgumentType.getDouble(context, "yaw"))))))));
 
         }
     }
@@ -83,10 +83,11 @@ public class Commands {
         return 1;
     }
 
-    private static int commandSetPitch(int value) {
+    private static int commandSetPitch(float value) {
         PlayerEntity player = MinecraftClient.getInstance().player;
         if (player != null) {
             player.setPitch(value);
+            AdvancedPivotControlClient.currentPitch = value;
             sendCommandFeedback("Pitch set to " + value);
             return 1;
         } else {
@@ -102,10 +103,11 @@ public class Commands {
         return 1;
     }
 
-    private static int commandSetYaw(int value) {
+    private static int commandSetYaw(float value) {
         PlayerEntity player = MinecraftClient.getInstance().player;
         if (player != null) {
             player.setYaw(value);
+            AdvancedPivotControlClient.currentYaw = value;
             sendCommandFeedback("Yaw set to " + value);
             return 1;
         } else {
@@ -121,11 +123,13 @@ public class Commands {
         return 1;
     }
 
-    private static int commandSetAngle(int pitch, int yaw) {
+    private static int commandSetAngle(float pitch, float yaw) {
         PlayerEntity player = MinecraftClient.getInstance().player;
         if (player != null) {
             player.setPitch(pitch);
             player.setYaw(yaw);
+            AdvancedPivotControlClient.currentPitch = pitch;
+            AdvancedPivotControlClient.currentYaw = yaw;
             sendCommandFeedback("Yaw set to " + yaw + " and pitch set to " + pitch);
             return 1;
         } else {
