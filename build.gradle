@@ -28,7 +28,7 @@ dependencies {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
-    // Mod Menu
+//    Mod Menu
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 }
 
