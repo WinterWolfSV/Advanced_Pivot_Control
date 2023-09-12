@@ -8,5 +8,20 @@
   "text.autoconfig.advanced_pivot_control.option.messageFeedback.@Tooltip": "Change whether a message is displayed when using keybindings or commands",
   "text.autoconfig.advanced_pivot_control.option.messageFeedback": "Command feedback ",
   "text.autoconfig.advanced_pivot_control.option.lockYaw": "Lock yaw ",
-  "text.autoconfig.advanced_pivot_control.option.lockPitch": "Lock pitch "
+  "text.autoconfig.advanced_pivot_control.option.lockPitch": "Lock pitch ",
+  "advanced_pivot_control.keybinding.turn_right": "Rotating yaw %s° to your right. New yaw: %s°",
+  "advanced_pivot_control.keybinding.turn_left": "Rotating yaw %s° to your left. New yaw: %s°",
+  "advanced_pivot_control.keybinding.turn_up": "Rotating pitch %s° up. New pitch: %s°",
+  "advanced_pivot_control.keybinding.turn_down": "Rotating pitch %s° down. New pitch: %s°",
+  "advanced_pivot_control.keybinding.yaw_lock": "Yaw lock %s",
+  "advanced_pivot_control.keybinding.pitch_lock": "Pitch lock %s",
+  "advanced_pivot_control.command.doCommandFeedback": "Command feedback set to %s",
+  "advanced_pivot_control.command.pitch_set": "Pitch set to %s°",
+  "advanced_pivot_control.command.pitch_steps_set": "Pitch steps set to %s°",
+  "advanced_pivot_control.command.yaw_set": "Yaw set to %s°",
+  "advanced_pivot_control.command.yaw_steps_set": "Yaw steps set to %s°",
+  "advanced_pivot_control.command.angle_set": "Pitch set to %s° and yaw set to %s°",
+  "advanced_pivot_control.command.yaw_lock": "Yaw lock set to %s",
+  "advanced_pivot_control.command.pitch_lock": "Pitch lock set to %s",
+  "advanced_pivot_control.command.player_null": "Player is null."
 }

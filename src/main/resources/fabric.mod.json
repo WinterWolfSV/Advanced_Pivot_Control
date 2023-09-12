@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "id": "advanced_pivot_control",
-  "version": "${version}",
-  "name": "Advanced Pivot Control",
-  "description": "A client side mod that allows you to adjust your pitch and yaw with greater precision than the default game settings allow for.",
+  "name": "${mod_name}",
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "description": "${mod_description}",
   "authors": ["WinterWolfSV"],
-  "contact": {},
-  "license": "CC-BY-NC-4.0",
-  "icon": "assets/advancedpivotcontrol/icon.png",
-  "environment": "client",
+  "contact": {"repo": "${repository}"},
+  "license": "${license}",
+  "icon": "${mod_icon}",
+  "environment": "${environment}",
   "entrypoints": {
 	"client": ["winterwolfsv.advancedpivotcontrol.client.AdvancedPivotControlClient"],
 	"main": ["winterwolfsv.advancedpivotcontrol.AdvancedPivotControl"],
@@ -17,7 +17,7 @@
   "depends": {
 	"fabricloader": "*",
 	"fabric": "*",
-	"minecraft": "1.20.*",
+	"minecraft": "${supported_minecraft_versions}",
 	"cloth-config": "*"
   }
 }
