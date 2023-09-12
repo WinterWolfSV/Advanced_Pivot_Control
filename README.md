@@ -52,7 +52,7 @@ license in any redistributed versions.
 
 Bug reports can be submitted either through the
 [GitHub Issues](https://github.com/WinterWolfSV/Advanced-Pivot-Control/issues)
-page of the Advanced Pivot Control Mod repository or by contacting me personally over Discord (WinterWolfSV#9577).
+page of the Advanced Pivot Control Mod repository or by contacting me personally over Discord (winterwolfsv).
 Please
 provide as much information as possible, including steps to reproduce the issue, error messages, and any relevant
 screenshots or log files. Your feedback is greatly appreciated and will help improve the mod for all users.
