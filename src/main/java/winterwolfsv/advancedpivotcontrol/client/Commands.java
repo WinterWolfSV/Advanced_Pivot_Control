@@ -10,10 +10,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import winterwolfsv.config.Config;
 
+import static winterwolfsv.advancedpivotcontrol.client.AdvancedPivotControlClient.MOD_ID;
+
 public class Commands {
 
     public static void register() {
-        final String[] nameList = new String[]{"advancedPivotControl", "apc"};
+        final String[] nameList = new String[]{"advancedpivotcontrol", "apc"};
 
         for (int i = 0; i < nameList.length; i++) {
             int finalI = i;
@@ -76,91 +78,103 @@ public class Commands {
         AutoConfig.getConfigHolder(Config.class).save();
         PlayerEntity player = MinecraftClient.getInstance().player;
         if (player != null) {
-            player.sendMessage(Text.literal("Command feedback set to " + doCommandFeedback), true);
+            player.sendMessage(Text.translatable(MOD_ID + ".command.doCommandFeedback", doCommandFeedback), true);
         } else {
-            System.out.println("Command feedback set to " + doCommandFeedback);
+            System.out.println(Text.translatable(MOD_ID + ".command.doCommandFeedback", doCommandFeedback));
         }
         return 1;
     }
 
     private static int commandSetPitch(float value) {
         PlayerEntity player = MinecraftClient.getInstance().player;
-        if (player != null) {
-            player.setPitch(value);
-            AdvancedPivotControlClient.currentPitch = value;
-            sendCommandFeedback("Pitch set to " + value);
-            return 1;
-        } else {
-            System.out.println("Player is null.");
+        if (player == null) {
+            System.out.println(Text.translatable(MOD_ID + ".command.player_null"));
             return 0;
         }
+        player.setPitch(value);
+        AdvancedPivotControlClient.currentPitch = value;
+        sendCommandFeedback(Text.translatable(MOD_ID + ".command.pitch_set", value));
+        return 1;
+
     }
 
     private static int commandSetPitchSteps(int value) {
         AutoConfig.getConfigHolder(Config.class).getConfig().pitchSteps = value;
         AutoConfig.getConfigHolder(Config.class).save();
-        sendCommandFeedback("Pitch steps set to " + value);
+        sendCommandFeedback(Text.translatable(MOD_ID + ".command.pitch_steps_set", value));
         return 1;
     }
 
     private static int commandSetYaw(float value) {
         PlayerEntity player = MinecraftClient.getInstance().player;
-        if (player != null) {
-            player.setYaw(value);
-            AdvancedPivotControlClient.currentYaw = value;
-            sendCommandFeedback("Yaw set to " + value);
-            return 1;
-        } else {
-            System.out.println("Player is null.");
+        if (player == null) {
+            System.out.println(Text.translatable(MOD_ID + ".command.player_null"));
             return 0;
         }
+        player.setYaw(value);
+        AdvancedPivotControlClient.currentYaw = value;
+        sendCommandFeedback(Text.translatable(MOD_ID + ".command.yaw_set", value));
+        return 1;
+
     }
 
     private static int commandSetYawSteps(int value) {
         AutoConfig.getConfigHolder(Config.class).getConfig().yawSteps = value;
         AutoConfig.getConfigHolder(Config.class).save();
-        sendCommandFeedback("Yaw steps set to " + value);
+        sendCommandFeedback(Text.translatable(MOD_ID + ".command.yaw_steps_set", value));
         return 1;
     }
 
     private static int commandSetAngle(float pitch, float yaw) {
         PlayerEntity player = MinecraftClient.getInstance().player;
-        if (player != null) {
-            player.setPitch(pitch);
-            player.setYaw(yaw);
-            AdvancedPivotControlClient.currentPitch = pitch;
-            AdvancedPivotControlClient.currentYaw = yaw;
-            sendCommandFeedback("Yaw set to " + yaw + " and pitch set to " + pitch);
-            return 1;
-        } else {
-            System.out.println("Player is null.");
+        if (player == null) {
+            System.out.println(Text.translatable(MOD_ID + ".command.player_null"));
             return 0;
         }
-    }
+        player.setPitch(pitch);
+        player.setYaw(yaw);
+        AdvancedPivotControlClient.currentPitch = pitch;
+        AdvancedPivotControlClient.currentYaw = yaw;
+        sendCommandFeedback(Text.translatable(MOD_ID + ".command.angle_set", pitch, yaw));
+        return 1;
 
-    public static void sendCommandFeedback(String message) {
-        if (AutoConfig.getConfigHolder(Config.class).getConfig().messageFeedback) {
-            PlayerEntity player = MinecraftClient.getInstance().player;
-            if (player != null) {
-                player.sendMessage(Text.literal(message), true);
-            } else {
-                System.out.println(message);
-            }
-        }
     }
 
     private static int commandLockYaw(boolean lockYaw) {
         AutoConfig.getConfigHolder(Config.class).getConfig().lockYaw = lockYaw;
         AutoConfig.getConfigHolder(Config.class).save();
-        sendCommandFeedback("Yaw lock set to " + AutoConfig.getConfigHolder(Config.class).getConfig().lockYaw);
+        sendCommandFeedback(Text.translatable(MOD_ID + ".command.yaw_lock", AutoConfig.getConfigHolder(Config.class).getConfig().lockYaw));
         return 1;
     }
 
     private static int commandLockPitch(boolean lockPitch) {
         AutoConfig.getConfigHolder(Config.class).getConfig().lockPitch = lockPitch;
         AutoConfig.getConfigHolder(Config.class).save();
-        sendCommandFeedback("Pitch lock set to " + AutoConfig.getConfigHolder(Config.class).getConfig().lockPitch);
+        sendCommandFeedback(Text.translatable(MOD_ID + ".command.pitch_lock", AutoConfig.getConfigHolder(Config.class).getConfig().lockPitch));
         return 1;
     }
 
+    public static void sendCommandFeedback(String message) {
+        if (!AutoConfig.getConfigHolder(Config.class).getConfig().messageFeedback) return;
+        PlayerEntity player = MinecraftClient.getInstance().player;
+
+        if (player == null) {
+            System.out.println(message);
+            return;
+        }
+        player.sendMessage(Text.literal(message), true);
+
+    }
+
+    public static void sendCommandFeedback(Text message) {
+        if (!AutoConfig.getConfigHolder(Config.class).getConfig().messageFeedback) return;
+        PlayerEntity player = MinecraftClient.getInstance().player;
+
+        if (player == null) {
+            System.out.println(message);
+            return;
+        }
+        player.sendMessage(message, true);
+
+    }
 }
