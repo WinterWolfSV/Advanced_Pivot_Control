@@ -33,6 +33,7 @@ The following commands can be used to configure the mod:
 - `/angle` and `/apc angle [int] [int] `: Sets both the pitch and yaw to the specified values.
 - `/lockpitch` and `/apc config lockpitch [bool]`: Locks the pitch to the current value.
 - `/lockyaw` and `/apc config lockyaw [bool]`: Locks the yaw to the current value.
+- `/lockangle`: Locks both the pitch and the yaw to the current value.
 - `/apc config setPitchSteps [int]`: Sets the number of pitch steps.
 - `/apc config setYawSteps [int]`: Sets the number of yaw steps.
 - `/apc config doCommandFeedback [bool]`: Enables or disables command feedback.

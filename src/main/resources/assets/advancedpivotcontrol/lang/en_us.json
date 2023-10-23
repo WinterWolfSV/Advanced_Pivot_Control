@@ -23,5 +23,6 @@
   "advanced_pivot_control.command.angle_set": "Pitch set to %s° and yaw set to %s°",
   "advanced_pivot_control.command.yaw_lock": "Yaw lock set to %s",
   "advanced_pivot_control.command.pitch_lock": "Pitch lock set to %s",
+  "advanced_pivot_control.command.angle_lock": "Angle lock set to %s",
   "advanced_pivot_control.command.player_null": "Player is null."
 }

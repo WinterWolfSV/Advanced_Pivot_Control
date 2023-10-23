@@ -65,6 +65,10 @@ public class Commands {
                     .then(ClientCommandManager.argument("lockPitch", BoolArgumentType.bool())
                             .executes(context -> commandLockPitch(BoolArgumentType.getBool(context, "lockPitch")))))));
 
+            ClientCommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("lockangle")
+                    .then(ClientCommandManager.argument("lockAngle", BoolArgumentType.bool())
+                            .executes(context -> commandLockAngle(BoolArgumentType.getBool(context, "lockAngle")))))));
+
             ClientCommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("angle")
                     .then(ClientCommandManager.argument("yaw", DoubleArgumentType.doubleArg(-180, 180))
                             .then(ClientCommandManager.argument("pitch", DoubleArgumentType.doubleArg(-90, 90))
@@ -151,6 +155,14 @@ public class Commands {
         AutoConfig.getConfigHolder(Config.class).getConfig().lockPitch = lockPitch;
         AutoConfig.getConfigHolder(Config.class).save();
         sendCommandFeedback(Text.translatable(MOD_ID + ".command.pitch_lock", AutoConfig.getConfigHolder(Config.class).getConfig().lockPitch));
+        return 1;
+    }
+
+    private static int commandLockAngle(boolean lockAngle) {
+        AutoConfig.getConfigHolder(Config.class).getConfig().lockYaw = lockAngle;
+        AutoConfig.getConfigHolder(Config.class).getConfig().lockPitch = lockAngle;
+        AutoConfig.getConfigHolder(Config.class).save();
+        sendCommandFeedback(Text.translatable(MOD_ID + ".command.angle_lock", lockAngle));
         return 1;
     }
 
