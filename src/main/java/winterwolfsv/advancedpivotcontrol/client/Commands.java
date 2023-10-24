@@ -24,29 +24,53 @@ public class Commands {
                     .then(ClientCommandManager.literal("pitch")
                             .then(ClientCommandManager.argument("pitch", DoubleArgumentType.doubleArg(-90, 90))
                                     .executes(context -> commandSetPitch((float) DoubleArgumentType.getDouble(context, "pitch")))))
+
                     .then(ClientCommandManager.literal("yaw")
                             .then(ClientCommandManager.argument("yaw", DoubleArgumentType.doubleArg(-180, 180))
                                     .executes(context -> commandSetYaw((float) DoubleArgumentType.getDouble(context, "yaw")))))
+
+
                     .then(ClientCommandManager.literal("angle")
                             .then(ClientCommandManager.argument("pitch", DoubleArgumentType.doubleArg(-90, 90))
                                     .then(ClientCommandManager.argument("yaw", DoubleArgumentType.doubleArg(-180, 180))
                                             .executes(context -> commandSetAngle((float) DoubleArgumentType.getDouble(context, "pitch"), (float) DoubleArgumentType.getDouble(context, "yaw"))))))
                     .then(ClientCommandManager.literal("config")
-                            .then(ClientCommandManager.literal("setPitchSteps")
+                            .then(ClientCommandManager.literal("setpitchsteps")
                                     .then(ClientCommandManager.argument("pitch", DoubleArgumentType.doubleArg(1, 90))
-                                            .executes(context -> commandSetPitchSteps((int) DoubleArgumentType.getDouble(context, "pitch")))))
-                            .then(ClientCommandManager.literal("setYawSteps")
+                                            .executes(context -> commandSetPitchSteps((int) DoubleArgumentType.getDouble(context, "pitch"))))
+                                    .executes(context -> {
+                                        context.getSource().sendFeedback(Text.of("Pitch Steps is set to: " + AutoConfig.getConfigHolder(Config.class).getConfig().pitchSteps));
+                                        return 1;
+                                    }))
+                            .then(ClientCommandManager.literal("setyawsteps")
                                     .then(ClientCommandManager.argument("yaw", DoubleArgumentType.doubleArg(1, 180))
-                                            .executes(context -> commandSetYawSteps((int) DoubleArgumentType.getDouble(context, "yaw")))))
-                            .then(ClientCommandManager.literal("doCommandFeedback")
+                                            .executes(context -> commandSetYawSteps((int) DoubleArgumentType.getDouble(context, "yaw"))))
+                                    .executes(context -> {
+                                        context.getSource().sendFeedback(Text.of("Yaw Steps is set to: " + AutoConfig.getConfigHolder(Config.class).getConfig().yawSteps));
+                                        return 1;
+                                    }))
+
+                            .then(ClientCommandManager.literal("docommandfeedback")
                                     .then(ClientCommandManager.argument("doCommandFeedback", BoolArgumentType.bool())
-                                            .executes(context -> commandDoCommandFeedback(BoolArgumentType.getBool(context, "doCommandFeedback")))))
-                            .then(ClientCommandManager.literal("lockYaw")
+                                            .executes(context -> commandDoCommandFeedback(BoolArgumentType.getBool(context, "doCommandFeedback"))))
+                                    .executes(context -> {
+                                        context.getSource().sendFeedback(Text.of("Do Command Feedback is set to: " + AutoConfig.getConfigHolder(Config.class).getConfig().messageFeedback));
+                                        return 1;
+                                    }))
+                            .then(ClientCommandManager.literal("lockyaw")
                                     .then(ClientCommandManager.argument("lockYaw", BoolArgumentType.bool())
-                                            .executes(context -> commandLockYaw(BoolArgumentType.getBool(context, "lockYaw")))))
+                                            .executes(context -> commandLockYaw(BoolArgumentType.getBool(context, "lockYaw"))))
+                                    .executes(context -> {
+                                        context.getSource().sendFeedback(Text.of("Yaw Lock is set to: " + AutoConfig.getConfigHolder(Config.class).getConfig().lockYaw));
+                                        return 1;
+                                    }))
                             .then(ClientCommandManager.literal("lockPitch")
                                     .then(ClientCommandManager.argument("lockPitch", BoolArgumentType.bool())
-                                            .executes(context -> commandLockPitch(BoolArgumentType.getBool(context, "lockPitch"))))))));
+                                            .executes(context -> commandLockPitch(BoolArgumentType.getBool(context, "lockPitch"))))
+                                    .executes(context -> {
+                                        context.getSource().sendFeedback(Text.of("Pitch Lock is set to: " + AutoConfig.getConfigHolder(Config.class).getConfig().lockPitch));
+                                        return 1;
+                                    })))));
 
 
             ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("pitch")
@@ -59,15 +83,28 @@ public class Commands {
 
             ClientCommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("lockyaw")
                     .then(ClientCommandManager.argument("lockYaw", BoolArgumentType.bool())
-                            .executes(context -> commandLockYaw(BoolArgumentType.getBool(context, "lockYaw")))))));
+                            .executes(context -> commandLockYaw(BoolArgumentType.getBool(context, "lockYaw"))))
+                    .executes(context -> {
+                        context.getSource().sendFeedback(Text.of("Lock Yaw is set to: " + AutoConfig.getConfigHolder(Config.class).getConfig().lockYaw));
+                        return 1;
+                    }))));
 
             ClientCommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("lockpitch")
                     .then(ClientCommandManager.argument("lockPitch", BoolArgumentType.bool())
-                            .executes(context -> commandLockPitch(BoolArgumentType.getBool(context, "lockPitch")))))));
+                            .executes(context -> commandLockPitch(BoolArgumentType.getBool(context, "lockPitch"))))
+                    .executes(context -> {
+                        context.getSource().sendFeedback(Text.of("Lock Pitch is set to: " + AutoConfig.getConfigHolder(Config.class).getConfig().lockPitch));
+                        return 1;
+                    }))));
 
             ClientCommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("lockangle")
                     .then(ClientCommandManager.argument("lockAngle", BoolArgumentType.bool())
-                            .executes(context -> commandLockAngle(BoolArgumentType.getBool(context, "lockAngle")))))));
+                            .executes(context -> commandLockAngle(BoolArgumentType.getBool(context, "lockAngle"))))
+                    .executes(context -> {
+                        boolean lockAngle = AutoConfig.getConfigHolder(Config.class).getConfig().lockYaw && AutoConfig.getConfigHolder(Config.class).getConfig().lockPitch;
+                        context.getSource().sendFeedback(Text.of("Lock Angle is set to: " + lockAngle));
+                        return 1;
+                    }))));
 
             ClientCommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess) -> dispatcher.register(ClientCommandManager.literal("angle")
                     .then(ClientCommandManager.argument("yaw", DoubleArgumentType.doubleArg(-180, 180))
