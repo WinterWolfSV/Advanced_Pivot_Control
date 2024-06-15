@@ -7,7 +7,7 @@
 //
 
 plugins {
-    id 'fabric-loom' version '1.3.9'
+    id 'fabric-loom' version '1.6-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -53,9 +53,7 @@ processResources {
                 "repository": project.repository,
                 "license": project.license,
                 "mod_icon": project.mod_icon,
-                "environment": project.environment,
-                // Below, add all dependencies that you want to add to your mod's fabric.mod.json
-                "supported_minecraft_versions": project.supported_minecraft_versions
+                "environment": project.environment
     }
 }
 
